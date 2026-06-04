@@ -121,6 +121,9 @@ Update paths in `functional_enrichment.R` accordingly.
 
 ## Analysis Pipeline
 
+![Analysis Pipeline](docs/pipeline_diagram.png)
+
+> Source: [analysis_pipeline.drawio](docs/analysis_pipeline.drawio) (open with [draw.io](https://app.diagrams.net))
 ```
 Raw 16S ASVs + MetaCyc pathways + EC numbers
         │
