@@ -1,0 +1,51 @@
+# =============================================================================
+#  .gitignore — Alopecia FMT Analysis Pipeline
+#  IMPORTANT: Real patient data is NEVER committed to this repo
+# =============================================================================
+
+# ── Real clinical data (NEVER commit) ────────────────────────────────────────
+inputs/
+*.xlsx
+*.xls
+
+# ── Analysis outputs (large files, reproducible from scripts) ─────────────────
+outputs/
+pairwise_results/
+ancom_lefse_aldex_results/
+PATHWAY/
+
+# ── R environment & cache ────────────────────────────────────────────────────
+.RData
+.Rhistory
+.Rproj.user/
+*.rds
+*.RDS
+
+# ── External mapping files (download separately, see README) ─────────────────
+map_metacyc-pwy_name.txt.gz
+map_metacyc-pwy_lineage.tsv
+ko_ec_cache.rds
+ko_module_cache.rds
+ko_pathway_cache.rds
+
+# ── Logs & temp ───────────────────────────────────────────────────────────────
+*.log
+tmp/
+.claude/
+
+# ── OS files ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.Rproj
+*.Rproj
+**/.idea/
+
+# ── What IS committed ─────────────────────────────────────────────────────────
+# scripts/          ✓ all R scripts
+# sim_inputs/       ✓ synthetic demo data only
+# README.md         ✓
+# CLAUDE.md         ✓ (analysis documentation)
+# .gitignore        ✓

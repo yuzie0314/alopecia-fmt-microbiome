@@ -1,0 +1,298 @@
+# CLAUDE.md
+# Alopecia Oral FMT — 16S + Functional Pathway Analysis
+# Project Documentation
+
+---
+
+## 1. Role（角色）
+
+You are a **gut microbiome bioinformatician** specialising in 16S rRNA amplicon sequencing and functional metagenomics analysis. This project involves designing and implementing a complete R-based analysis pipeline for a clinical trial studying oral FMT (Faecal Microbiota Transplantation) in alopecia patients.
+
+Key responsibilities in this project:
+- Design statistically rigorous analysis frameworks appropriate for small clinical cohorts (n=10)
+- Handle repeated-measures design (3 timepoints per patient) correctly throughout all analyses
+- Bridge microbiome community shifts with clinical outcome (SALT score)
+- Integrate taxonomic and functional (pathway/EC) evidence into a coherent biological story
+
+---
+
+## 2. Project Overview（專案目的）
+
+**Study design:**
+- 10 alopecia patients (5 FMT, 5 placebo)
+- 3 timepoints: Baseline → 2M post-FMT → 6M post-FMT
+- Clinical outcome: SALT score (lower = better hair regrowth)
+- Note: GM03 has no Baseline sample (FMT group), excluded from BL-dependent analyses
+
+**Primary research question:**
+> Does oral FMT induce a directional, consistent gut microbiome shift in alopecia patients, and does this shift correlate with clinical improvement (SALT score)?
+
+**Data inputs:**
+| File | Description |
+|------|-------------|
+| `ASV/*.tsv` | 16S ASV abundance tables per sample |
+| `ASV/*z_log2_abun.csv` | Pathway abundance (z-scored log2) |
+| `metadata.xlsx` | 4 sheets: ids, v1 (baseline), v2 (2M), v3 (6M) |
+| `metacyc_pathway_table.csv` | MetaCyc pathway RPK abundance |
+| `ec_pathway_table.csv` | EC number RPK abundance |
+| `map_metacyc-pwy_name_txt.gz` | MetaCyc PWY-ID ↔ full pathway name |
+| `map_metacyc-pwy_lineage.tsv` | MetaCyc PWY-ID → official hierarchy |
+| `ko_ec_cache.rds` | KO ID ↔ EC number mapping (data.frame) |
+| `ko_module_cache.rds` | KO ID → KEGG module mapping (list) |
+| `ko_pathway_cache.rds` | KO ID → KEGG pathway mapping (list) |
+
+---
+
+## 3. Analysis Pipeline（分析步驟）
+
+### Step 0 — Data preparation (`data_prep.R`)
+- Load `ids_mapper.lst`: map `analysis_id` → `lab_id` (SampleID)
+- Fix `purrr::reduce` namespace conflict → use `purrr::reduce()` explicitly
+- Fix `rename_with()` mapping direction (analysis_id → SampleID)
+- Split raw ASV table into `asv_table.csv`, `taxonomy.csv`, `metadata.csv`
+- Metadata: merge v1/v2/v3 sheets, fill Treatment/Age/Race from v1 into v2/v3
+- Filter: `status == "s"` only; GM03 has no Baseline
+
+**Key lessons:**
+- `str_remove(".16S.exp.")` needs escaped dots: `\\.16S\\.exp\\.`
+- `column_to_rownames("PatientID")` causes downstream `pivot_wider` failures → comment out
+
+---
+
+### Step 1 — Alpha diversity (`alopecia_fmt_16S_analysis.R`, Section 1)
+**Metrics:** Observed ASVs, Chao1, ACE, Shannon, Pielou's J (evenness)
+
+**Statistical tests:**
+- LMM: `Shannon ~ Timepoint * Treatment + Age + (1|PatientID)` (lme4 + emmeans)
+- Kruskal-Wallis: 3-timepoint overall effect within each group
+- Friedman test: paired repeated-measures (non-parametric)
+- Wilcoxon paired: Baseline vs 6M within each group
+- Mann-Whitney U: FMT vs placebo per timepoint
+- **BH correction** across all metrics simultaneously
+
+**Delta analysis:** `Δ = timepoint − Baseline`, compare FMT vs placebo on Δ values
+
+**SALT correlation:** Spearman ρ per metric × per timepoint heatmap (BH-corrected)
+
+**Rarefaction curves:** `vegan::rarecurve()` — must use base `matrix()` constructor (not `as.matrix()`) to strip phyloseq S4 class; `tidy = TRUE` not supported in all versions
+
+---
+
+### Step 2 — Beta diversity (`beta_diversity.R`)
+
+**Distance matrices:**
+- Bray-Curtis: `phyloseq::distance(ps_filt, "bray")` — internally normalises, no need for relative abundance pre-conversion
+- Aitchison: genus-level CLR (pseudo-count = 0.5) + Euclidean distance
+
+**Key design decision:** envfit for Bray-Curtis uses relative abundance matrix; envfit for Aitchison uses CLR matrix — must match the space the PCoA was computed in
+
+**PERMANOVA:** `adonis2` with `how(blocks = PatientID, nperm = 999)` to correctly handle repeated measures. Without blocks, between-subject permutation violates paired structure.
+
+**Directional shift analysis (Baseline → 6M):**
+- `ΔPC1 = PC1(6M) − PC1(Baseline)` per patient
+- Direction consistency test (all same sign?)
+- Wilcoxon: FMT vs placebo on ΔPC1
+- Spearman: ΔPC1 ~ ΔSALT
+- GM03 excluded (no Baseline)
+
+**envfit auto scale_factor:** normalise vectors to unit length then scale to 35% of PCoA radius — prevents vectors from being invisible or oversized
+
+**Within-subject distance change:** `geom_point + position_jitter(seed=42)` — seed must match between `geom_point` and `geom_text_repel` for labels to align with points
+
+---
+
+### Step 3 — Differential abundance — Taxonomy (`deseq2_analysis.R`)
+
+**Three parallel methods (each with different statistical assumptions):**
+
+| Method | Input | Random effect | Primary use |
+|--------|-------|---------------|-------------|
+| DESeq2 | Raw counts (integer) | PatientID as fixed block | Count-based, LFC + shrinkage |
+| MaAsLin2 | Relative abundance | PatientID as random effect | Continuous, proper repeated measures |
+| ANCOM-BC2 | Raw counts | None (paired via blocking) | Compositional-aware |
+
+**Comparison designs:**
+- **A:** FMT vs placebo @ 6M — `~ Treatment`
+- **B:** FMT Baseline → 6M — `~ PatientID + Timepoint` (paired, excl. GM03)
+- **C:** Placebo Baseline → 6M — `~ PatientID + Timepoint` (natural fluctuation control)
+- **D:** LRT: 3-timepoint trend — full `~ PatientID + Timepoint` vs reduced `~ PatientID`
+- **E:** FMT-specific taxa = (A ∩ B, not C) with `|LFC| > 1`
+
+**ANCOM-BC2 column name issue (v2.14):** When only 2 groups, result columns are named `lfc_(Intercept)` not `lfc_TreatmentFMT`. Fix: `grep("^lfc_", ...) %>% .[!grepl("Intercept|PatientID", .)]`
+
+**`select` namespace conflict:** MASS/raster can mask `dplyr::select`. Fix: `select <- dplyr::select` at top, or use `dplyr::select()` explicitly throughout.
+
+---
+
+### Step 4 — Pairwise timepoint DA (`pairwise_timepoint_da.R`)
+
+**3 transitions × 2 groups × 3 data types = 18 comparisons per method**
+
+| Transition | GM03 handling |
+|-----------|---------------|
+| BL → 2M | Excluded (no Baseline) |
+| 2M → 6M | Included |
+| BL → 6M | Excluded (no Baseline) |
+
+**Methods:** DESeq2 (sensitivity, round RPK to integer) + MaAsLin2 (primary, TSS normalisation)
+
+**MaAsLin2 `reference` parameter must be dynamic:** For M2→6M transition, `reference = "Timepoint,2M post-FMT"` (not "Baseline"). Using hardcoded "Baseline" when Baseline is not in the data causes: `Error: 'ref' must be an existing level`
+
+**Output structure:**
+```
+pairwise_results/
+  taxonomy/ metacyc/ ec/
+    BL_2M/ M2_6M/ BL_6M/    ← individual CSVs
+  combined/                   ← merged long-format + figures
+```
+
+**Key visualisations:** LFC timeline heatmap (rows = features, cols = transitions) for both DESeq2 and MaAsLin2
+
+---
+
+### Step 5 — ANCOM-BC2 + LEfSe + ALDEx2 (`ancom_lefse_aldex.R`)
+
+**LEfSe (lefser 1.22):**
+- Input: `SummarizedExperiment` (convert from phyloseq via `ps_to_se()`)
+- Must call `relativeAb(se_obj)` before `lefser()` — 1.22 uses `relab =` parameter not `expr =`
+- Timepoint factor must be `droplevels()` before passing — 3-level factor with 2 values causes "must be dichotomous" error
+
+**ALDEx2 (1.44):**
+- `aldex.ttest()` does NOT return `effect` column — must call `aldex.effect()` separately then `cbind()`
+- Paired test: `aldex.ttest(clr, paired.test = TRUE)`
+- Significance: use `wi.eBH` (Wilcoxon BH-corrected)
+
+**LEfSe on Δabundance (novel design):**
+- Compute `Δ = log2(rel.abund 6M + ε) − log2(rel.abund BL + ε)` per patient
+- Each patient contributes ONE value → independent observations
+- Removes the repeated-measures problem for LEfSe
+- Equivalent to paired analysis done at the data level
+
+---
+
+### Step 6 — Pathway beta diversity + DA (`pathway_analysis.R`)
+
+**Key distinction:** Bray-Curtis does NOT require pre-normalisation (formula is equivalent for counts or rel. abund). envfit DOES require normalisation to remove library size effects.
+
+**MetaCyc DA design (same A/B/C logic as taxonomy):**
+- Bidirectional: FMT-specific Up AND Down
+- Uses `pval < 0.05` (not `qval`) due to small n + large feature space
+- EC parallel analysis with identical design
+
+**`maas_*_full` variable naming convention:**
+- `maas_metacyc_full` = all samples, `~ Treatment + Timepoint + Age`
+- `maas_metacyc_fmt` = FMT group only, `~ Timepoint` + `random = PatientID`
+- `maas_metacyc_plc` = placebo only, `~ Timepoint` + `random = PatientID`
+- Same naming for EC: `maas_ec_full`, `maas_ec_fmt`, `maas_ec_plc`
+
+---
+
+### Step 7 — Functional enrichment (`functional_enrichment.R`)
+
+**Part 1 — MetaCyc hierarchy rollup:**
+- `map_metacyc-pwy_name_txt.gz`: no header, tab-separated, `PWY-ID \t full name`
+- `map_metacyc-pwy_lineage.tsv`: no header, tab-separated, `PWY-ID \t lineage` (one-to-many)
+- Lineage format: `Biosynthesis|Cofactor-Biosynthesis|Vitamin-Biosynthesis|...`
+- `top_level` = first token before `|`; `second_level` = first two tokens
+- Gene sets built at both top-level and second-level for fgsea
+
+**Part 2 — fgsea (MetaCyc):**
+- MaAsLin2 and DESeq2 run independently (different scales, cannot average)
+- NES concordance scatter: same-direction categories = most reliable results
+
+**Part 3 & 4 — EC → KEGG (RDS-based):**
+- `ko_ec_cache.rds`: `data.frame(ko, ec)` — EC to KO mapping
+- `ko_module_cache.rds`: `list(KO → module_vector)` — same format as `ko_pathway_cache.rds`
+- Bridge: EC → KO (via `ko_ec`) → module/pathway (via `ko_module`/`ko_pathway`)
+- Background EC = intersection of raw EC features with those having KO annotation
+- ORA run bidirectionally (Up and Down separately)
+- fgsea run on both module-level and pathway-level gene sets
+
+---
+
+## 4. Main Outputs（主要輸出）
+
+### R Scripts
+| Script | Purpose |
+|--------|---------|
+| `data_prep.R` | Raw data → analysis-ready CSV |
+| `alopecia_fmt_16S_analysis.R` | Main 16S pipeline (alpha + taxa) |
+| `beta_diversity.R` | Beta diversity function (Bray-Curtis + Aitchison) |
+| `deseq2_analysis.R` | DESeq2 + MaAsLin2 + ANCOM-BC2 differential taxa |
+| `pairwise_timepoint_da.R` | Pairwise BL→2M / 2M→6M / BL→6M |
+| `ancom_lefse_aldex.R` | ANCOM-BC2 + LEfSe + ALDEx2 |
+| `pathway_analysis.R` | Pathway beta diversity + MaAsLin2 |
+| `functional_enrichment.R` | MetaCyc rollup + fgsea + EC ORA |
+| `analysis_pipeline.drawio` | Full pipeline flowchart (draw.io) |
+
+### Key analytical outputs
+| Output | File | Description |
+|--------|------|-------------|
+| FMT-specific taxa | `deseq2_E_FMT_specific.csv` | DESeq2 A∩B not C, \|LFC\|>1 |
+| Three-method concordance | `concordance_three_methods.csv` | DESeq2 + MaAsLin2 + ANCOM-BC2 |
+| FMT-specific pathways | `fmt_specific_metacyc.csv` | MaAsLin2 A∩B not C |
+| MetaCyc category summary | `metacyc_category_summary.csv` | Official hierarchy rollup |
+| fgsea MetaCyc | `fgsea_maaslin2_metacyc.csv` | NES per category |
+| fgsea EC modules | `fgsea_ec_kegg_modules.csv` | NES per KEGG module |
+| EC ORA | `ora_ec_kegg_module.csv` | Fisher's exact per module |
+| ΔSALT ~ ΔPC1 | in `beta_diversity.R` | PCoA shift vs clinical outcome |
+| Genus-SALT heatmap | in `beta_diversity.R` | envfit top genus × ΔSALT Spearman |
+
+---
+
+## 5. Optimisation Directions（優化可能方向）
+
+### Statistical
+1. **Sample size limitation (n=10):** All results are exploratory. Effect sizes (LFC, NES, Spearman ρ) are more meaningful than p-values. Report 80% CIs alongside point estimates.
+
+2. **Multiple testing:** Currently using BH correction within each analysis module. Consider global FDR correction across all taxa/pathway tests if reporting jointly.
+
+3. **PERMANOVA with blocks vs dream:** `how(blocks=PatientID)` approximates repeated measures but is not a true mixed model. For more rigorous beta diversity testing, consider `vegan::anova.cca` on constrained ordination.
+
+4. **ALDEx2 Monte Carlo variance:** `mc.samples = 128` is moderate. Increase to 512+ for final publication figures to reduce stochastic variation in effect estimates.
+
+5. **LEfSe on Δabundance:** This is a novel design choice — paired structure handled at data level. Validate by checking that placebo group shows no consistent direction in the same analysis.
+
+### Biological
+6. **Donor characterisation:** If donor microbiome data is available, engraftment analysis (donor similarity score) would strengthen the mechanistic story.
+
+7. **2M timepoint:** Currently used mainly in pairwise analysis. Consider whether 2M represents partial engraftment or transient response — trajectory shape (monotonic vs peaked) has biological implications.
+
+8. **Antibiotics covariate:** v3 sheet has antibiotic use data. Sensitivity analysis excluding patients who took antibiotics after last visit would strengthen causal inference.
+
+9. **Sex:** Distribution balanced (FMT 2F/2M, placebo 2F/3M) — not corrected. If a larger cohort is analysed, sex should be included.
+
+### Technical
+10. **`select` namespace conflict:** Always load `select <- dplyr::select` at the start of each script, or use explicit `dplyr::select()`. MASS, raster, and other packages commonly mask this.
+
+11. **phyloseq S4 class stripping:** When passing otu_table to base R functions (e.g. `vegan::rarecurve`), always use `matrix(as.integer(as.vector(otu_table(ps))), ...)` to fully strip S4 attributes.
+
+12. **ANCOMBC2 column naming:** In v2.x with 2-group comparisons, result columns may be `lfc_(Intercept)` instead of `lfc_TreatmentFMT`. Always use dynamic `grep()` to find column names rather than hardcoding.
+
+13. **MaAsLin2 `reference` parameter:** Must always match actual factor levels in the subset being analysed. For pairwise transitions not involving Baseline, reference must be updated dynamically.
+
+14. **Pathway analysis scale:** MetaCyc RPK values are NOT relative abundance. Use `normalization = "TSS"` in MaAsLin2 and `round()` for DESeq2 sensitivity analysis. Document this distinction clearly in methods.
+
+15. **envfit interpretation:** envfit vectors show correlation direction, not causation. A genus pointing in the same direction as FMT shift means it co-varies with the overall community change — combine with DESeq2 results to confirm it is also differentially abundant.
+
+---
+
+## 6. Package Versions（環境資訊）
+
+```
+R version:   4.6.0 (2026-04-24 ucrt)
+Bioconductor: 3.23
+ANCOMBC:     2.14.0
+lefser:      1.22.0
+ALDEx2:      1.44.0
+```
+
+**Known version-specific behaviours:**
+- `lefser 1.22`: use `relab =` parameter and call `relativeAb()` first
+- `ANCOMBC 2.x`: `rand_formula = NULL` (random formula not supported in `ancombc2()`); 2-group results use `(Intercept)` column naming
+- `ALDEx2 1.44`: `aldex.ttest()` does not include effect size; call `aldex.effect()` separately
+
+---
+
+*Last updated: 2026-06-01*
+*Project: Alopecia Oral FMT — microbiome analysis*
