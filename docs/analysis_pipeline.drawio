@@ -1,0 +1,412 @@
+<mxfile host="Electron">
+  <diagram id="N6e9pngqGXlQyRZUAZvF" name="第 1 页">
+    <mxGraphModel dx="1414" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;" value="Alopecia Oral FMT — 16S + Pathway Analysis Pipeline" vertex="1">
+          <mxGeometry height="40" width="1054" x="300" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="h1" parent="1" style="text;html=1;strokeColor=none;fillColor=#dae8fc;align=center;verticalAlign=middle;fontStyle=1;fontSize=12;rounded=1;" value="INPUT DATA" vertex="1">
+          <mxGeometry height="40" width="160" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="h2" parent="1" style="text;html=1;strokeColor=none;fillColor=#d5e8d4;align=center;verticalAlign=middle;fontStyle=1;fontSize=12;rounded=1;" value="PRE-PROCESSING" vertex="1">
+          <mxGeometry height="40" width="160" x="240" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="h3" parent="1" style="text;html=1;strokeColor=none;fillColor=#fff2cc;align=center;verticalAlign=middle;fontStyle=1;fontSize=12;rounded=1;" value="ALPHA DIVERSITY" vertex="1">
+          <mxGeometry height="40" width="160" x="440" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="h4" parent="1" style="text;html=1;strokeColor=none;fillColor=#f8cecc;align=center;verticalAlign=middle;fontStyle=1;fontSize=12;rounded=1;" value="BETA DIVERSITY" vertex="1">
+          <mxGeometry height="40" width="160" x="640" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="h5" parent="1" style="text;html=1;strokeColor=none;fillColor=#e1d5e7;align=center;verticalAlign=middle;fontStyle=1;fontSize=12;rounded=1;" value="DIFFERENTIAL TAXA" vertex="1">
+          <mxGeometry height="40" width="160" x="840" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="h6" parent="1" style="text;html=1;strokeColor=none;fillColor=#f0a30a;fontColor=#000000;align=center;verticalAlign=middle;fontStyle=1;fontSize=12;rounded=1;" value="PATHWAY ANALYSIS" vertex="1">
+          <mxGeometry height="40" width="160" x="1040" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="h7" parent="1" style="text;html=1;strokeColor=none;fillColor=#647687;fontColor=#ffffff;align=center;verticalAlign=middle;fontStyle=1;fontSize=12;rounded=1;" value="INTEGRATION" vertex="1">
+          <mxGeometry height="40" width="160" x="1280" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="in1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" value="ASV Table&#xa;(16S rRNA)&#xa;rows=ASVs, cols=samples" vertex="1">
+          <mxGeometry height="60" width="160" x="40" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="in2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" value="Taxonomy Table&#xa;(Kingdom→Species)" vertex="1">
+          <mxGeometry height="60" width="160" x="40" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="in3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" value="Metadata&#xa;SampleID / PatientID&#xa;Timepoint / Treatment&#xa;SALT score / Age / Sex" vertex="1">
+          <mxGeometry height="70" width="160" x="40" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="in4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=10;" value="MetaCyc Pathway Table&#xa;(rows=pathways, cols=samples)&#xa;RPK values" vertex="1">
+          <mxGeometry height="60" width="160" x="40" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="in5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=10;" value="EC Number Table&#xa;(rows=EC, cols=samples)&#xa;RPK values" vertex="1">
+          <mxGeometry height="60" width="160" x="40" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="pp1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" value="data_prep.R&#xa;&#xa;ids_mapper.lst mapping&#xa;analysis_id → lab_id&#xa;(rename_with)" vertex="1">
+          <mxGeometry height="70" width="160" x="240" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="pp2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" value="Phyloseq object&#xa;&#xa;otu_table + tax_table&#xa;+ sample_data" vertex="1">
+          <mxGeometry height="60" width="160" x="240" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="X7lQqlWeZr_0fNnE7Bwe-3" edge="1" parent="1" source="pp3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;" target="a1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pp3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" value="Filtering&lt;br&gt;&lt;br&gt;ASV: prevalence ≥2 samples&lt;br&gt;total count ≥4 (median)&lt;br&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;span&gt;→ ps_filt&lt;/span&gt;&lt;br&gt;&lt;/font&gt;Note: GM03 no Baseline" vertex="1">
+          <mxGeometry height="80" width="160" x="240" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="pp4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d80073;strokeColor=#A50040;fontSize=10;fontColor=#ffffff;" value="Rarefaction&#xa;&#xa;depth = min(sample_sums) × 0.9&#xa;set.seed(42)&#xa;→ ps_rare" vertex="1">
+          <mxGeometry height="70" width="160" x="240" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="pp5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" value="Pathway Filtering&#xa;&#xa;prevalence ≥ 20%&#xa;mean abundance ≥ 1" vertex="1">
+          <mxGeometry height="60" width="160" x="240" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" value="Metrics (ps_filt)&lt;br&gt;&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;• Observed ASVs (richness)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;• Chao1 (richness)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;• ACE (richness)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;• Shannon (diversity)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;• Pielou&#39;s J (evenness)&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="160" x="440" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" value="Rarefaction Curves&lt;br&gt;&lt;br&gt;vegan::rarecurve&lt;br&gt;step=200&lt;br&gt;verify sequencing depth" vertex="1">
+          <mxGeometry height="70" width="160" x="440" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" value="Statistical Tests&lt;br&gt;&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;① LMM: Shannon/Pielou/Chao1/ACE&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;~ Timepoint*Treatment + Age&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ (1|PatientID)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;② Kruskal-Wallis (3 timepoints)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;③ Friedman (paired, within trt)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;④ Wilcoxon paired (BL vs 6M)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;⑤ Mann-Whitney (FMT vs placebo)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;⑥ BH correction (all metrics)&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="160" x="440" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" value="Delta Analysis&#xa;&#xa;Δ = timepoint − Baseline&#xa;Wilcoxon: FMT vs placebo&#xa;on Δ values" vertex="1">
+          <mxGeometry height="70" width="160" x="440" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" value="Alpha × SALT&#xa;&#xa;Spearman ρ&#xa;per metric per timepoint&#xa;BH correction" vertex="1">
+          <mxGeometry height="60" width="160" x="440" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="b1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" value="Distance Matrices&lt;br&gt;&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;① Bray-Curtis (filt)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;② Aitchison / CLR&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;(genus-level, pseudo=0.5)&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="640" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="b2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" value="PCoA Ordination&#xa;&#xa;cmdscale / ordinate&#xa;PC1, PC2, PC3&#xa;Trajectory plot (geom_path)" vertex="1">
+          <mxGeometry height="70" width="160" x="640" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="b3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" value="PERMANOVA&#xa;&#xa;adonis2&#xa;~ Treatment*Timepoint + Age&#xa;how(blocks=PatientID)&#xa;nperm=999&#xa;+ betadisper" vertex="1">
+          <mxGeometry height="90" width="160" x="640" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="b4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" value="Directional Shift&#xa;&#xa;ΔPC1 = PC1(6M) − PC1(BL)&#xa;Direction consistency per group&#xa;Wilcoxon: FMT vs placebo dPC1&#xa;Spearman: dPC1 ~ dSALT" vertex="1">
+          <mxGeometry height="90" width="160" x="640" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="b5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" value="Within-subject BC Change&#xa;&#xa;Boxplot: BL→2M, BL→6M&#xa;Wilcoxon signed-rank&#xa;(BC &gt; 0 per group)" vertex="1">
+          <mxGeometry height="70" width="160" x="640" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="b6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" value="envfit&#xa;&#xa;Genus driving PCoA shift&#xa;(BL + 6M samples only)&#xa;Bray: rel. abund matrix&#xa;Aitchison: CLR matrix&#xa;p&lt;0.05, top 10 r²" vertex="1">
+          <mxGeometry height="90" width="160" x="640" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="d1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" value="DESeq2 — Genus level&#xa;(tax_glom)&#xa;poscounts size factor" vertex="1">
+          <mxGeometry height="60" width="160" x="840" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="d2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" value="Section A&#xa;FMT vs Placebo @ 6M&#xa;~ Treatment&#xa;Wald test&#xa;ashr shrinkage" vertex="1">
+          <mxGeometry height="70" width="160" x="840" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="d3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" value="Section B&#xa;FMT: BL → 6M (paired)&#xa;~ PatientID + Timepoint&#xa;excl. GM03&#xa;Wald test" vertex="1">
+          <mxGeometry height="70" width="160" x="840" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="d4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" value="Section C&#xa;Placebo: BL → 6M&#xa;~ PatientID + Timepoint&#xa;(natural fluctuation control)" vertex="1">
+          <mxGeometry height="70" width="160" x="840" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="d5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" value="Section D&#xa;LRT: 3-timepoint trend&#xa;full: ~PatientID+Timepoint&#xa;reduced: ~PatientID&#xa;FMT &amp; placebo separately" vertex="1">
+          <mxGeometry height="80" width="160" x="840" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="d6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d79b00;fontColor=#ffffff;strokeColor=#b46504;fontSize=10;fontStyle=1;" value="Section E ⭐&#xa;FMT-specific Taxa&#xa;&#xa;A ∩ B, not C&#xa;(truly FMT-driven)" vertex="1">
+          <mxGeometry height="70" width="160" x="840" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="d7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" value="Genus-SALT Heatmap&#xa;&#xa;envfit top 10 genera&#xa;Spearman ρ by treatment group&#xa;(FMT n=5, placebo n=5)&#xa;BH correction" vertex="1">
+          <mxGeometry height="80" width="160" x="840" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="pw1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=10;" value="Beta Diversity&lt;br&gt;(pathway_analysis.R)&lt;br&gt;&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Bray-Curtis + Aitchison&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;PERMANOVA w/ blocks&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;envfit top pathways&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="160" x="1040" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="pw2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;" value="MaAsLin2&lt;br&gt;(PRIMARY)&lt;br&gt;&lt;br&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;TSS + LOG normalization&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;LM + random(PatientID)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;A: ~Treatment+Timepoint&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;B: FMT ~Timepoint (paired)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;C: Placebo ~Timepoint&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="160" x="1040" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="pw3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=10;" value="DESeq2&#xa;(SENSITIVITY)&#xa;&#xa;round(RPK) → integer&#xa;Same A/B/C design&#xa;poscounts + ashr" vertex="1">
+          <mxGeometry height="80" width="160" x="1040" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="pw4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d79b00;fontColor=#ffffff;strokeColor=#b46504;fontSize=10;fontStyle=1;" value="FMT-specific Pathways ⭐&#xa;&#xa;MaAsLin2: A∩B not C&#xa;DESeq2: A∩B not C&#xa;→ Overlap = high confidence" vertex="1">
+          <mxGeometry height="80" width="160" x="1040" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="pw5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=10;" value="Pathway × SALT&#xa;&#xa;Δabundance (6M−BL)&#xa;Spearman ρ vs dSALT&#xa;BH correction&#xa;per treatment group" vertex="1">
+          <mxGeometry height="80" width="160" x="1040" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="int1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;fontSize=10;" value="Taxa ↔ Pathway Link&#xa;&#xa;DESeq2 FMT-specific taxa&#xa;vs&#xa;MaAsLin2 FMT-specific pathways&#xa;Directional concordance?" vertex="1">
+          <mxGeometry height="90" width="160" x="1280" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="int2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d79b00;fontColor=#ffffff;strokeColor=#b46504;fontSize=10;fontStyle=1;" value="Triple Overlap ⭐&#xa;&#xa;FMT-specific taxa (DESeq2 E)&#xa;∩ FMT-specific pathways&#xa;∩ SALT-correlated&#xa;= Mechanistic candidates" vertex="1">
+          <mxGeometry height="100" width="160" x="1280" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="int3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;fontSize=10;" value="Clinical Interpretation&#xa;&#xa;• Which taxa engrafted?&#xa;• Which pathways changed?&#xa;• Does microbiome shift&#xa;  explain SALT improvement?" vertex="1">
+          <mxGeometry height="100" width="160" x="1280" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="int4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;fontSize=10;" value="Covariates Used&#xa;&#xa;Age: continuous (LMM/DESeq2)&#xa;Sex: NOT corrected&#xa;(balanced: FMT 2F/2M,&#xa; placebo 2F/3M)&#xa;PatientID: random effect / block" vertex="1">
+          <mxGeometry height="100" width="160" x="1280" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="in1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;curved=0;" target="pp1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="190" />
+              <mxPoint x="220" y="195" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="in2" style="edgeStyle=orthogonalEdgeStyle;" target="pp1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="120" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="in3" style="edgeStyle=orthogonalEdgeStyle;" target="pp1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="355" />
+              <mxPoint x="230" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="in4" style="edgeStyle=orthogonalEdgeStyle;" target="pp5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="460" />
+              <mxPoint x="230" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="in5" style="edgeStyle=orthogonalEdgeStyle;" target="pp5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="pp1" style="edgeStyle=orthogonalEdgeStyle;" target="pp2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="pp2" style="edgeStyle=orthogonalEdgeStyle;" target="pp3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="pp3" style="edgeStyle=orthogonalEdgeStyle;" target="b1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="380" />
+              <mxPoint x="420" y="140" />
+              <mxPoint x="720" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="pp5" style="edgeStyle=orthogonalEdgeStyle;" target="pw1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="560" />
+              <mxPoint x="420" y="140" />
+              <mxPoint x="1120" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="a1" style="edgeStyle=orthogonalEdgeStyle;" target="a3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="a3" style="edgeStyle=orthogonalEdgeStyle;" target="a4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="a3" style="edgeStyle=orthogonalEdgeStyle;" target="a5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="360" />
+              <mxPoint x="430" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" source="b1" style="edgeStyle=orthogonalEdgeStyle;" target="b2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" edge="1" parent="1" source="b1" style="edgeStyle=orthogonalEdgeStyle;" target="b3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="810" y="200" />
+              <mxPoint x="810" y="395" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e19" edge="1" parent="1" source="b2" style="edgeStyle=orthogonalEdgeStyle;" target="b4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="295" />
+              <mxPoint x="820" y="505" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e20" edge="1" parent="1" source="b1" style="edgeStyle=orthogonalEdgeStyle;" target="b5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="200" />
+              <mxPoint x="820" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e21" edge="1" parent="1" source="b2" style="edgeStyle=orthogonalEdgeStyle;" target="b6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="630" y="295" />
+              <mxPoint x="630" y="705" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e22" edge="1" parent="1" source="d1" style="edgeStyle=orthogonalEdgeStyle;" target="d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e23" edge="1" parent="1" source="d1" style="edgeStyle=orthogonalEdgeStyle;" target="d3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1030" y="190" />
+              <mxPoint x="1030" y="365" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e24" edge="1" parent="1" source="d1" style="edgeStyle=orthogonalEdgeStyle;" target="d4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1030" y="190" />
+              <mxPoint x="1030" y="455" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e25" edge="1" parent="1" source="d1" style="edgeStyle=orthogonalEdgeStyle;" target="d5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1030" y="190" />
+              <mxPoint x="1030" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e26" edge="1" parent="1" source="d2" style="edgeStyle=orthogonalEdgeStyle;" target="d6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1020" y="275" />
+              <mxPoint x="1020" y="645" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e27" edge="1" parent="1" source="d3" style="edgeStyle=orthogonalEdgeStyle;" target="d6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1010" y="365" />
+              <mxPoint x="1010" y="645" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e28" edge="1" parent="1" source="d4" style="edgeStyle=orthogonalEdgeStyle;" target="d6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="830" y="455" />
+              <mxPoint x="830" y="645" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e29" edge="1" parent="1" source="b6" style="edgeStyle=orthogonalEdgeStyle;" target="d7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e30" edge="1" parent="1" source="pw1" style="edgeStyle=orthogonalEdgeStyle;" target="pw2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e31" edge="1" parent="1" source="pw1" style="edgeStyle=orthogonalEdgeStyle;" target="pw3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1210" y="205" />
+              <mxPoint x="1210" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e32" edge="1" parent="1" source="pw2" style="edgeStyle=orthogonalEdgeStyle;" target="pw4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1210" y="325" />
+              <mxPoint x="1210" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e33" edge="1" parent="1" source="pw3" style="edgeStyle=orthogonalEdgeStyle;" target="pw4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e34" edge="1" parent="1" source="pw2" style="edgeStyle=orthogonalEdgeStyle;" target="pw5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1210" y="325" />
+              <mxPoint x="1210" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e35" edge="1" parent="1" source="d6" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;strokeWidth=2;" target="int1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1010" y="645" />
+              <mxPoint x="1010" y="740" />
+              <mxPoint x="1250" y="740" />
+              <mxPoint x="1250" y="245" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e36" edge="1" parent="1" source="pw4" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;strokeWidth=2;" target="int1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1250" y="540" />
+              <mxPoint x="1250" y="245" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e37" edge="1" parent="1" source="int1" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;strokeWidth=2;" target="int2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e38" edge="1" parent="1" source="pw5" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;strokeWidth=2;" target="int2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1250" y="640" />
+              <mxPoint x="1250" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e39" edge="1" parent="1" source="d7" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;strokeWidth=2;" target="int2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1250" y="740" />
+              <mxPoint x="1250" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e40" edge="1" parent="1" source="int2" style="edgeStyle=orthogonalEdgeStyle;" target="int3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="leg0" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontStyle=1;fontSize=11;" value="LEGEND" vertex="1">
+          <mxGeometry height="30" width="100" x="40" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1" parent="1" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=9;" value="16S Input" vertex="1">
+          <mxGeometry height="25" width="100" x="40" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2" parent="1" style="rounded=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=9;" value="Pathway Input" vertex="1">
+          <mxGeometry height="25" width="100" x="150" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3" parent="1" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;" value="Pre-processing" vertex="1">
+          <mxGeometry height="25" width="100" x="260" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4" parent="1" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=9;" value="Alpha diversity" vertex="1">
+          <mxGeometry height="25" width="100" x="370" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="leg5" parent="1" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=9;" value="Beta diversity" vertex="1">
+          <mxGeometry height="25" width="100" x="480" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="leg6" parent="1" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=9;" value="Differential taxa" vertex="1">
+          <mxGeometry height="25" width="100" x="590" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="leg7" parent="1" style="rounded=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=9;" value="Pathway analysis" vertex="1">
+          <mxGeometry height="25" width="100" x="700" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="leg8" parent="1" style="rounded=1;fillColor=#d79b00;fontColor=#ffffff;strokeColor=#b46504;fontSize=9;" value="⭐ Key output" vertex="1">
+          <mxGeometry height="25" width="100" x="810" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="leg9" parent="1" style="rounded=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;fontSize=9;" value="Integration" vertex="1">
+          <mxGeometry height="25" width="100" x="920" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="X7lQqlWeZr_0fNnE7Bwe-5" edge="1" parent="1" source="pp3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;" target="a2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
