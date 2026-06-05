@@ -25,24 +25,25 @@ An end-to-end R pipeline for analysing 16S rRNA amplicon sequencing and function
 ```
 .
 ├── scripts/
-│   ├── simulate_demo_data.R   # Generate synthetic demo inputs
-│   ├── run_pipeline.R         # Master pipeline runner
-│   ├── 0_1-loadData.R         # Data loading & QC
-│   ├── 1-alpha.R              # Alpha diversity
-│   ├── 2-beta.R               # Beta diversity (Bray-Curtis + Aitchison)
-│   ├── 3-da.R                 # Differential abundance (DESeq2 + MaAsLin2)
-│   ├── 4-pathway_analysis.R   # Pathway beta diversity + MaAsLin2
-│   ├── 5-pairwise_da.R        # Pairwise timepoint DA
-│   ├── ancom_lefse_aldex.R    # ANCOM-BC2 + LEfSe + ALDEx2
-│   ├── functional_enrichment.R # fgsea + KEGG ORA
-│   └── improvement_analyses.R # Publication figures + statistical improvements
-├── sim_inputs/                # Synthetic demonstration data (auto-generated)
+│   ├── simulate_demo_data.R     # Generate synthetic sim_inputs/ (run first)
+│   ├── run_pipeline.R           # Master runner (Steps 0–8)
+│   ├── 0_0-data_prep.R          # Raw data → analysis-ready CSV
+│   ├── 0_1-loadData.R           # Load inputs into R global env
+│   ├── 1-alpha.R                # Alpha diversity
+│   ├── 2-beta.R                 # Beta diversity (Bray-Curtis + Aitchison)
+│   ├── 3-da.R                   # Differential abundance (DESeq2 + MaAsLin2)
+│   ├── 4-pathway_analysis.R     # Pathway DA + SALT correlation
+│   ├── 5-pairwise_da.R          # Pairwise timepoint DA (18 comparisons)
+│   ├── ancom_lefse_aldex.R      # ANCOM-BC2 + LEfSe + ALDEx2
+│   ├── functional_enrichment.R  # fgsea MetaCyc + KEGG ORA
+│   └── improvement_analyses.R   # Publication figures + ALDEx2 mc=512
+├── sim_inputs/                  # Synthetic demo data (auto-generated)
 │   ├── metadata.csv
 │   ├── asv_table.csv
 │   ├── taxonomy.csv
 │   ├── metacyc_pathway_table.csv
 │   └── ec_pathway_table.csv
-├── CLAUDE.md                  # Full analysis documentation
+├── CLAUDE.md                    # Full analysis documentation
 └── README.md
 ```
 
@@ -121,9 +122,8 @@ Update paths in `functional_enrichment.R` accordingly.
 
 ## Analysis Pipeline
 
-![Analysis Pipeline](docs/pipeline_diagram.png)
-
-> Source: [analysis_pipeline.drawio](docs/analysis_pipeline.drawio) (open with [draw.io](https://app.diagrams.net))
+> Pipeline diagram: export `docs/analysis_pipeline.drawio` as PNG from [draw.io](https://app.diagrams.net) to display here.  
+> Source file: [docs/analysis_pipeline.drawio](docs/analysis_pipeline.drawio)
 ```
 Raw 16S ASVs + MetaCyc pathways + EC numbers
         │
