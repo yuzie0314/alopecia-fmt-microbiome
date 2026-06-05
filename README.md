@@ -16,7 +16,7 @@ An end-to-end R pipeline for analysing 16S rRNA amplicon sequencing and function
 | Timepoints | Baseline, 2M post-FMT, 6M post-FMT |
 | Primary outcome | SALT score (Severity of Alopecia Tool) |
 | Sequencing | 16S rRNA V3-V4 amplicon |
-| Functional data | MetaCyc pathways + EC numbers (HUMAnN3) |
+| Functional data | MetaCyc pathways + EC numbers (DADA2 + Paprica) |
 
 ---
 
