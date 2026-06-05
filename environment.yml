@@ -1,0 +1,48 @@
+# Conda environment — Alopecia FMT Microbiome Pipeline
+# R 4.6.0 / Bioconductor 3.23
+#
+# Create:   conda env create -f environment.yml
+# Activate: conda activate alopecia-fmt
+# Remove:   conda env remove -n alopecia-fmt
+#
+# NOTE: conda-forge/bioconda packages may lag behind the latest Bioconductor
+# release. If r-base=4.6.0 is not yet available, use Docker instead (see INSTALL.md).
+
+name: alopecia-fmt
+
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+
+dependencies:
+  # ── R base ────────────────────────────────────────────────────────────────
+  - r-base>=4.5.0
+
+  # ── CRAN ──────────────────────────────────────────────────────────────────
+  - r-tidyverse
+  - r-readxl
+  - r-tibble
+  - r-broom
+  - r-ggrepel
+  - r-patchwork
+  - r-rcolorbrewer
+  - r-scales
+  - r-vegan
+  - r-lme4
+  - r-lmertest
+  - r-emmeans
+  - r-rstatix
+  - r-cairo
+
+  # ── Bioconductor (via bioconda) ────────────────────────────────────────────
+  - bioconductor-phyloseq
+  - bioconductor-deseq2
+  - bioconductor-maaslin2
+  - bioconductor-ancombc
+  - bioconductor-lefser
+  - bioconductor-aldex2
+  - bioconductor-fgsea
+  - bioconductor-keggrest
+  - bioconductor-summarizedexperiment
+  - bioconductor-ssizerna        # optional, sample size power analysis

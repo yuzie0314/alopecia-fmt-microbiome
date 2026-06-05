@@ -53,18 +53,13 @@ An end-to-end R pipeline for analysing 16S rRNA amplicon sequencing and function
 
 ### 1. Prerequisites
 
+**R 4.6.0 / Bioconductor 3.23** — see **[INSTALL.md](INSTALL.md)** for full setup options (renv, Docker, Singularity, conda).
+
+Quick install (native R):
+
 ```r
-# Install required packages
-install.packages(c("tidyverse","vegan","ggrepel","patchwork","lme4","emmeans"))
-
-if (!requireNamespace("BiocManager")) install.packages("BiocManager")
-BiocManager::install(c(
-  "phyloseq","DESeq2","ANCOMBC","Maaslin2","lefser","ALDEx2",
-  "fgsea","SummarizedExperiment","Biobase"
-))
+source("scripts/packages.R")
 ```
-
-**R version**: 4.6.0 | **Bioconductor**: 3.23
 
 ### 2. Generate simulated data
 

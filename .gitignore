@@ -44,8 +44,12 @@ desktop.ini
 **/.idea/
 
 # ── What IS committed ─────────────────────────────────────────────────────────
-# scripts/          ✓ all R scripts
+# scripts/          ✓ all R scripts (incl. packages.R)
 # sim_inputs/       ✓ synthetic demo data only
 # README.md         ✓
 # CLAUDE.md         ✓ (analysis documentation)
+# INSTALL.md        ✓
+# environment.yml   ✓ (conda)
+# Dockerfile        ✓ (Docker / Singularity)
+# renv.lock         ✓ (exact package versions)
 # .gitignore        ✓
